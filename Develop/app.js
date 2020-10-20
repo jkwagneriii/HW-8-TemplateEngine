@@ -104,12 +104,16 @@ function employeePrompt () {
             inquirer.prompt(engineerQuestions)
             .then(function(engineerData){
             console.log(engineerData);
+            //create new engineer
+            createNewEngineer(data, engineerData);
         }) 
 
         } else if (data.role === "Intern") {
             inquirer.prompt(internQuestions)
             .then(function(internData){
             console.log(internData);
+            //create new intern
+            createNewIntern(data, internData);
         })
     }
 });
@@ -137,6 +141,25 @@ function createNewManager (data, managerData) {
     // prompts add another question function to see whether they want to add another or stop
     addAnother();
 };
+
+//Save and push EngineerData to empty ProductionTeam array.
+function createNewEngineer (data, engineerData) {
+    var myNewManager = new Manager(data.id, data.name, data.email, engineerData.officeNumber);
+    productionTeam.push(myNewManager);
+    console.log('Production Team', productionTeam);
+    // prompts add another question function to see whether they want to add another or stop
+    addAnother();
+};
+
+//Save and push InternData to empty ProductionTeam array.
+function createNewIntern (data, internData) {
+    var myNewManager = new Manager(data.id, data.name, data.email, internData.officeNumber);
+    productionTeam.push(myNewManager);
+    console.log('Production Team', productionTeam);
+    // prompts add another question function to see whether they want to add another or stop
+    addAnother();
+};
+
 
 // Populate HTML function
 // function populateHTML() {

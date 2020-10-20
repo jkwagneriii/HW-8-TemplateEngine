@@ -1,4 +1,4 @@
-//This script will use a class called Employee to create a constructor that takes in user data. Using a class creates the oppourtunity to add multiple employees without repeating code.
+//This script will use a class called Employee to create a constructor that takes in user data. Using a class creates the opportunity to add multiple employees without repeating code.
 class Employee {
     constructor(id, name, email) {
         this.id = id;
@@ -6,7 +6,7 @@ class Employee {
         this.email = email;
     }
 
-    //The following mehtods are nn reference to the htmlRenderer.js file. Each method will contain a return using the 'this' keyword.
+    //The following methods are in reference to the htmlRenderer.js file. Each method will contain a return using the 'this' keyword.
     getId() {
         return this.id
     }

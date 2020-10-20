@@ -1,19 +1,20 @@
-// const Manager = require("./lib/Manager");
-// const Engineer = require("./lib/Engineer");
-// const Intern = require("./lib/Intern");
+const Employee = require("./lib/Employee")
+const Manager = require("./lib/Manager");
+const Engineer = require("./lib/Engineer");
+const Intern = require("./lib/Intern");
 const inquirer = require("inquirer");
-// const path = require("path");
-// const fs = require("fs");
+const path = require("path");
+const fs = require("fs");
 
-// const OUTPUT_DIR = path.resolve(__dirname, "output");
+const OUTPUT_DIR = path.resolve(__dirname, "output");
 //Umm, what is this supposed to do Jake?
-// const outputPath = path.join(OUTPUT_DIR, "team.html");
+const outputPath = path.join(OUTPUT_DIR, "team.html");
 
-// const render = require("./lib/htmlRenderer");
+const render = require("./lib/htmlRenderer");
 
 
 // Write code to use inquirer to gather information about the development team members,
-// and to create objects for each team member (using the correct classes as blueprints!)
+// and to create objects for each team member (using the correct classes as blueprints!) 
 
 //Empty array to store individual objects
 let productionTeam = [];
@@ -70,7 +71,16 @@ const internQuestions = [
     }
 ]
 
-//The main function for this application. This will prompt the user a series of questions which will then render into an html file with corrisponding style classes.
+//If the user wants to add another team member then...
+const addAnotherQuestions = [
+    {
+        name: 'addAnother',
+        type: 'confirm',
+        message: 'Would you like to add another team member?'
+    }
+]
+
+//The main function for this application. This will prompt the user a series of questions which will then render into an html file with corresponding style classes.
 function employeePrompt () {
 
     //Welcome message
@@ -80,12 +90,14 @@ function employeePrompt () {
     inquirer
     .prompt(mainQuestions)
     .then(function(data) {
-        console.log(data);
 
+        //After the introductory questions the user will be asked one more additional question based on the data from their 'role' response.
         if (data.role === "Manager") {
             inquirer.prompt(managerQuestions)
             .then(function(managerData){
             console.log(managerData);
+            //create new manager
+            createNewManager(data, managerData);
         })
 
         } else if (data.role === "Engineer") {
@@ -103,13 +115,43 @@ function employeePrompt () {
 });
 };
 
+// Function that allows more team members to be added or to go ahead and populate the HTML document.
+function addAnother() {
+    inquirer.prompt(addAnotherQuestions).then(function(anotherData) {
+        console.log(anotherData);
+
+        if(anotherData.addAnother === true) {
+            employeePrompt();
+        } else {
+            //Can't get this to work yet. Where does render go??
+            populateHTML()
+        }
+    })
+}
+
+//Save and push managerData to empty ProductionTeam array.
+function createNewManager (data, managerData) {
+    var myNewManager = new Manager(data.id, data.name, data.email, managerData.officeNumber);
+    productionTeam.push(myNewManager);
+    console.log('Production Team', productionTeam);
+    // prompts add another question function to see whether they want to add another or stop
+    addAnother();
+};
+
+// Populate HTML function
+// function populateHTML() {
+
+// }
+
+//Run the initial question command.
 employeePrompt();
 
+//Probably not correct but maybe? 
+// render();
 
 
 
 
-//After the introductory questions the user will be asked one more additional question based on the data from their 'role' response.
 
 
 

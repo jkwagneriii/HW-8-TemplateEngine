@@ -18,6 +18,7 @@ const inquirer = require("inquirer");
 //Empty array to store individual objects
 let productionTeam = [];
 
+//Intro questions for all users
 const mainQuestions = [
     {
         name: 'id',
@@ -69,13 +70,38 @@ const internQuestions = [
     }
 ]
 
+//The main function for this application. This will prompt the user a series of questions which will then render into an html file with corrisponding style classes.
 function employeePrompt () {
-inquirer
+
+    //Welcome message
+    console.log('Welcome to the team! Please provide some more information before we started!')
+
+    //see https://www.npmjs.com/package/inquirer
+    inquirer
     .prompt(mainQuestions)
     .then(function(data) {
         console.log(data);
-    })
-}
+
+        if (data.role === "Manager") {
+            inquirer.prompt(managerQuestions)
+            .then(function(managerData){
+            console.log(managerData);
+        })
+
+        } else if (data.role === "Engineer") {
+            inquirer.prompt(engineerQuestions)
+            .then(function(engineerData){
+            console.log(engineerData);
+        }) 
+
+        } else if (data.role === "Intern") {
+            inquirer.prompt(internQuestions)
+            .then(function(internData){
+            console.log(internData);
+        })
+    }
+});
+};
 
 employeePrompt();
 
@@ -83,7 +109,7 @@ employeePrompt();
 
 
 
-
+//After the introductory questions the user will be asked one more additional question based on the data from their 'role' response.
 
 
 

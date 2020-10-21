@@ -7,10 +7,11 @@ const path = require("path");
 const fs = require("fs");
 
 const OUTPUT_DIR = path.resolve(__dirname, "output");
-//Umm, what is this supposed to do Jake?
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
+
+
 
 
 // Write code to use inquirer to gather information about the development team members,
@@ -71,6 +72,7 @@ const internQuestions = [
     }
 ]
 
+//Use confirm instead of input to receive boolean values
 //If the user wants to add another team member then...
 const addAnotherQuestions = [
     {
@@ -144,8 +146,8 @@ function createNewManager (data, managerData) {
 
 //Save and push EngineerData to empty ProductionTeam array.
 function createNewEngineer (data, engineerData) {
-    var myNewManager = new Manager(data.id, data.name, data.email, engineerData.officeNumber);
-    productionTeam.push(myNewManager);
+    var myNewEngineer = new Engineer (data.id, data.name, data.email, engineerData.github);
+    productionTeam.push(myNewEngineer);
     console.log('Production Team', productionTeam);
     // prompts add another question function to see whether they want to add another or stop
     addAnother();
@@ -153,8 +155,8 @@ function createNewEngineer (data, engineerData) {
 
 //Save and push InternData to empty ProductionTeam array.
 function createNewIntern (data, internData) {
-    var myNewManager = new Manager(data.id, data.name, data.email, internData.officeNumber);
-    productionTeam.push(myNewManager);
+    var myNewIntern = new Intern (data.id, data.name, data.email, internData.school);
+    productionTeam.push(myNewIntern);
     console.log('Production Team', productionTeam);
     // prompts add another question function to see whether they want to add another or stop
     addAnother();
@@ -162,24 +164,16 @@ function createNewIntern (data, internData) {
 
 
 // Populate HTML function
-// function populateHTML() {
-
-// }
+function populateHTML() {
+    var rawHtml = render(productionTeam)
+    console.log('raw html ??',rawHtml)
+    fs.writeFile(outputPath,rawHtml, function(errr){
+        console.log('did something go wrong', errr);
+    })
+}
 
 //Run the initial question command.
 employeePrompt();
-
-//Probably not correct but maybe? 
-// render();
-
-
-
-
-
-
-
-
-
 
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will

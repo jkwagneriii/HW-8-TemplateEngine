@@ -5,10 +5,10 @@ const Intern = require("./lib/Intern");
 const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
-
+//--------------------------------------------------------//
 const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
-
+//--------------------------------------------------------//
 const render = require("./lib/htmlRenderer");
 
 
@@ -129,7 +129,6 @@ function addAnother() {
         if(anotherData.addAnother === true) {
             employeePrompt();
         } else {
-            //Can't get this to work yet. Where does render go??
             populateHTML()
         }
     })
